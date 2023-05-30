@@ -64,3 +64,7 @@ export interface Parameters {
 }
 export type Method = 'get' | 'post' | 'put' | 'delete';
 export type FetchMap = Partial<Record<Method, { name: string }>>;
+export interface TopInfo {
+  author?: string;
+  mail?: string;
+}

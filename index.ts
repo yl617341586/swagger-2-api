@@ -4,12 +4,18 @@ import { resolve } from 'path';
 import { cwd } from 'process';
 import getSwaggerJson from './utils/get-swagger-json';
 import generateServeFile from './utils/generate-serve-file';
-import { FetchMap } from './swagger';
+import { FetchMap, TopInfo } from './swagger';
 import eslintServe from './utils/eslint-serve';
+
 export default (options: { excludeParam: Array<string>; fetchMap: FetchMap }) => {
   const run = async (
     swagger: Swagger | string,
-    { path, typeFileName, lint }: { path?: string; typeFileName?: string; lint?: boolean } = {},
+    {
+      path,
+      typeFileName,
+      lint,
+      topInfo,
+    }: { path?: string; typeFileName?: string; lint?: boolean; topInfo?: TopInfo } = {},
   ) => {
     const outputDir = resolve(cwd(), path?.replace(/^\//g, '') ?? './');
     const typeFilePath = resolve(outputDir, typeFileName ?? 'type.ts');
@@ -26,7 +32,7 @@ export default (options: { excludeParam: Array<string>; fetchMap: FetchMap }) =>
       // 生成类型文件
       await generateTypeFile(json, typeFilePath);
       // 生成服务文件
-      generateServeFile(json, outputDir, options.fetchMap);
+      generateServeFile(json, { output: outputDir, fetchMap: options.fetchMap, topInfo });
       // 格式化
       lint && (await eslintServe(outputDir));
     } catch (e: any) {
