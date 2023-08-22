@@ -1,40 +1,30 @@
+import { OpenApi } from 'swagger-2-ts-file/lib/openapi';
 import { generateTypeFile } from 'swagger-2-ts-file';
-import { Swagger } from 'swagger-2-ts-file/lib/swagger';
 import { resolve } from 'path';
 import { cwd } from 'process';
-import getSwaggerJson from './utils/get-swagger-json';
-import generateServeFile from './utils/generate-serve-file';
-import { FetchMap, TopInfo } from './swagger';
-import eslintServe from './utils/eslint-serve';
+import { openapiInputFormat, generateServeFile, eslintServe, customGenerate } from './utils';
+import { InitOption, RunOptions } from './type';
 
-export default (options: { excludeParam: Array<string>; fetchMap: FetchMap }) => {
+export const api2Serve = (option: InitOption) => {
   const run = async (
-    swagger: Swagger | string,
+    openapi: OpenApi | string,
     {
-      path,
-      typeFileName,
+      path = resolve(cwd(), 'api'),
+      typeFileName = 'type.ts',
       lint,
-      topInfo,
-    }: { path?: string; typeFileName?: string; lint?: boolean; topInfo?: TopInfo } = {},
+      headerInfo,
+      custom = customGenerate,
+    }: RunOptions = {},
   ) => {
-    const outputDir = resolve(cwd(), path?.replace(/^\//g, '') ?? './');
-    const typeFilePath = resolve(outputDir, typeFileName ?? 'type.ts');
+    if (!['js', 'ts'].includes(option.mode)) throw new Error('mode must be js or ts');
     try {
-      let json: Swagger;
-      try {
-        if (typeof swagger === 'string' && new RegExp(/^http(|s):/).test(swagger))
-          json = await getSwaggerJson(swagger);
-        else if (typeof swagger !== 'string') json = swagger;
-        else throw new Error('swagger格式不符合规范，请传入一个可访问url，或者swagger json对象。');
-      } catch (e: any) {
-        throw new Error(`Swagger数据初始化失败。失败原因：${e.message}`);
-      }
+      const json = await openapiInputFormat(openapi);
       // 生成类型文件
-      await generateTypeFile(json, typeFilePath);
+      await generateTypeFile(json, resolve(path, typeFileName));
       // 生成服务文件
-      generateServeFile(json, { output: outputDir, fetchMap: options.fetchMap, topInfo });
+      generateServeFile(json, Object.assign(option, { path, headerInfo, typeFileName, custom }));
       // 格式化
-      lint && (await eslintServe(outputDir));
+      lint && (await eslintServe(path));
     } catch (e: any) {
       console.log(`[Swagger2TSServe]: ${e.message}`);
     }

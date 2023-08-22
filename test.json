@@ -1,0 +1,360 @@
+{
+  "auth": {
+    "imports": [
+      "RegisterResponseDto",
+      "CreateUserDto",
+      "LoginResponseDto",
+      "LoginUserDto"
+    ],
+    "fetchs": [
+      "axios"
+    ],
+    "entitys": [
+      {
+        "name": "AuthController_login",
+        "url": "/auth/login",
+        "description": " ",
+        "T": "LoginResponseDto",
+        "parameters": {
+          "header": {},
+          "body": {
+            "description": "",
+            "type": "LoginUserDto"
+          },
+          "query": {},
+          "path": {},
+          "cookie": {}
+        },
+        "method": "post"
+      }
+    ]
+  },
+  "user": {
+    "imports": [
+      "UserDto",
+      "CreateBlogResDto",
+      "any",
+      "Blogs",
+      "PrivateBlogs",
+      "DetailBlogDto"
+    ],
+    "fetchs": [
+      "axios",
+      "putData"
+    ],
+    "entitys": [
+      {
+        "name": "blogCreate",
+        "url": "/blog/create",
+        "description": "创建博客 需要登录",
+        "T": "CreateBlogResDto",
+        "parameters": {
+          "header": {},
+          "body": {
+            "description": "创建博客的body数据",
+            "type": "any"
+          },
+          "query": {},
+          "path": {},
+          "cookie": {}
+        },
+        "method": "post"
+      },
+      {
+        "name": "BlogController_list",
+        "url": "/blog/list",
+        "description": "获取博客列表 ",
+        "T": "Blogs",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "page": {
+              "description": "页码",
+              "type": "string"
+            },
+            "size": {
+              "description": "每页数量",
+              "type": "string"
+            }
+          },
+          "path": {},
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_postList",
+        "url": "/blog/list",
+        "description": "获取博客列表post ",
+        "T": "Blogs",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "page": {
+              "description": "页码",
+              "type": "string"
+            },
+            "size": {
+              "description": "每页数量",
+              "type": "string"
+            },
+            "name": {
+              "description": "hahahah",
+              "type": "\"lew\" | \"as\""
+            }
+          },
+          "path": {},
+          "cookie": {}
+        },
+        "method": "post"
+      },
+      {
+        "name": "BlogController_ownList",
+        "url": "/blog/{uid}/list",
+        "description": "获取个人博客列表 需要登录",
+        "T": "PrivateBlogs",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "page": {
+              "description": "页码",
+              "type": "string"
+            },
+            "size": {
+              "description": "每页数量",
+              "type": "string"
+            }
+          },
+          "path": {
+            "uid": {
+              "description": "用户id",
+              "type": "string"
+            }
+          },
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_detail",
+        "url": "/blog/detail",
+        "description": "获取博客详情 ",
+        "T": "DetailBlogDto",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "id": {
+              "description": "",
+              "type": "string"
+            }
+          },
+          "path": {},
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_ownDetail",
+        "url": "/blog/{uid}/detail",
+        "description": "获取个人博客详情 ",
+        "T": "DetailBlogDto",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "id": {
+              "description": "博客ID",
+              "type": "string"
+            }
+          },
+          "path": {
+            "uid": {
+              "description": "用户ID",
+              "type": "string"
+            }
+          },
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_publish",
+        "url": "/blog/{id}/publish",
+        "description": "发布博客 ",
+        "T": "CreateBlogResDto",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {},
+          "path": {
+            "id": {
+              "description": "",
+              "type": "string"
+            }
+          },
+          "cookie": {}
+        },
+        "method": "put"
+      }
+    ]
+  },
+  "blog": {
+    "imports": [
+      "CreateBlogResDto",
+      "any",
+      "Blogs",
+      "PrivateBlogs",
+      "DetailBlogDto"
+    ],
+    "fetchs": [
+      "axios",
+      "putData"
+    ],
+    "entitys": [
+      {
+        "name": "BlogController_list",
+        "url": "/blog/list",
+        "description": "获取博客列表 ",
+        "T": "Blogs",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "page": {
+              "description": "页码",
+              "type": "string"
+            },
+            "size": {
+              "description": "每页数量",
+              "type": "string"
+            }
+          },
+          "path": {},
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_postList",
+        "url": "/blog/list",
+        "description": "获取博客列表post ",
+        "T": "Blogs",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "page": {
+              "description": "页码",
+              "type": "string"
+            },
+            "size": {
+              "description": "每页数量",
+              "type": "string"
+            },
+            "name": {
+              "description": "hahahah",
+              "type": "\"lew\" | \"as\""
+            }
+          },
+          "path": {},
+          "cookie": {}
+        },
+        "method": "post"
+      },
+      {
+        "name": "BlogController_ownList",
+        "url": "/blog/{uid}/list",
+        "description": "获取个人博客列表 需要登录",
+        "T": "PrivateBlogs",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "page": {
+              "description": "页码",
+              "type": "string"
+            },
+            "size": {
+              "description": "每页数量",
+              "type": "string"
+            }
+          },
+          "path": {
+            "uid": {
+              "description": "用户id",
+              "type": "string"
+            }
+          },
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_detail",
+        "url": "/blog/detail",
+        "description": "获取博客详情 ",
+        "T": "DetailBlogDto",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "id": {
+              "description": "",
+              "type": "string"
+            }
+          },
+          "path": {},
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_ownDetail",
+        "url": "/blog/{uid}/detail",
+        "description": "获取个人博客详情 ",
+        "T": "DetailBlogDto",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {
+            "id": {
+              "description": "博客ID",
+              "type": "string"
+            }
+          },
+          "path": {
+            "uid": {
+              "description": "用户ID",
+              "type": "string"
+            }
+          },
+          "cookie": {}
+        },
+        "method": "get"
+      },
+      {
+        "name": "BlogController_publish",
+        "url": "/blog/{id}/publish",
+        "description": "发布博客 ",
+        "T": "CreateBlogResDto",
+        "parameters": {
+          "header": {},
+          "body": {},
+          "query": {},
+          "path": {
+            "id": {
+              "description": "",
+              "type": "string"
+            }
+          },
+          "cookie": {}
+        },
+        "method": "put"
+      }
+    ]
+  }
+}
